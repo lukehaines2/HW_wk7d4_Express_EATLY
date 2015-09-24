@@ -23,6 +23,8 @@ var foods =[
   {id: 4, name: "Kale", yumminess: "meh"}
 ]
 
+var id_arr = []
+
 // ROUTES //
 
 // root path
@@ -34,12 +36,19 @@ app.get("/", function (req, res) {
 // foods index path
 app.get("/foods", function (req, res) {
   // render foods index as JSON
+  res.json(foods)
 })
 
 app.post("/foods", function (req, res) {
   // add a unique id
+  Object.keys(foods).forEach(function(key) {
+    id_arr.push(key);
+  });
   // add new food to DB (array, really...)
+  var new_id = Math.max.apply(Math, id_arr) + 1;
+  foods.push({id: new_id, name: 'McLuke', yumminess: 'pickled'});
   // send a response with newly created object
+  res.json(foods); 
 })
 
 app.delete("/foods/:id", function (req, res) {
