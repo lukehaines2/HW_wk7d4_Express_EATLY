@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // DATA //
 
 // pre-seeded food data
-var foods =[
+var foods = [
   {id: 0, name: "Sushiritto", yumminess: "quite"},
   {id: 1, name: "Green Eggs & Ham", yumminess: "sure"},
   {id: 2, name: "Crayfish", yumminess: "depending"},
@@ -51,9 +51,24 @@ app.post("/foods", function (req, res) {
   res.json(foods); 
 })
 
+var deleted;
+var index;
+
 app.delete("/foods/:id", function (req, res) {
   console.log("hitting delete route");
   // finding an object with id = req.body.id out of the foods
+  for (var i = 0; i < foods.length; i++) {
+   if (foods[i].id === parseInt(req.params.id)) {
+     deleted = foods[i]
+     index = foods.indexOf(foods[i])
+     foods.splice(index,1) 
+     
+   }
+  }
+  console.log(foods);
+  console.log(index);
+  console.log(deleted);
+  res.json(deleted)
   // remove item from array
   // render deleted object
 })
